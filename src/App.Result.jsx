@@ -14,11 +14,17 @@ const RELATIONSHIPS = {
   },
 };
 
-const calcWinner = (player, opponent) => {
-  const { win, lose } = RELATIONSHIPS[player];
-  if (opponent === win) return "Win";
-  if (opponent === lose) return "Lose";
-  return "Draw";
+export function calcWinner(player, opponent) {
+  if (player === opponent) return "draw";
+  if (RELATIONSHIPS[player].win === opponent) return "win";
+  return "lose";
+};
+
+// Message for all results
+const resultMessages = {
+  win: "You Win!",
+  lose: "You Lose!",
+  draw: "It's a Draw!"
 };
 
 const calcMessage = (player, opponent, status) => {
@@ -34,23 +40,28 @@ const calcMessage = (player, opponent, status) => {
  * @param {'rock' | 'paper' | 'scissors'} props.player
  * @param {'rock' | 'paper' | 'scissors'} props.opponent
  */
-export const Result = (props) => {
-  const status = calcWinner(props.player, props.opponent);
-
+export default function Result({ userChoice, computerChoice, result, onReplay }) {
   return (
-    <div>
-      <h1>{status}</h1>
-
-      <p>{calcMessage(props.player, props.opponent, status)}</p>
-
+    <div style={{ textAlign: "center", marginTop: "3rem" }}>
+      <h2>{resultMessages[result]}</h2>
+      <div style={{ margin: "2rem 0" }}>
+        <p>
+          <strong>Your Choice:</strong> {capitalize(userChoice)}
+        </p>
+        <p>
+          <strong>Computer's Choice:</strong> {capitalize(computerChoice)}
+        </p>
+      </div>
       <button
+        onClick={onReplay}
         style={{
-          background: "blue",
-          color: "white",
-          fontSize: "1.5rem",
+          fontSize: "1.25rem",
+          padding: "1rem 2rem",
+          marginTop: "1rem",
+          cursor: "pointer"
         }}
       >
-        PLAY AGAIN
+        Play Again
       </button>
     </div>
   );

@@ -1,18 +1,10 @@
 import React, { useState } from 'react';
 import Start from "./App.Start";
-import Select from "./App.Result";
+import Select from "./App.Select";
+import Result from "./App.Result";
+import { calcWinner } from './App.Result'; // game-logic
 
 const choices = ["rock", "paper", "scissors"];
-
-function getResult(user, computer) { // function to determine game result(s)
-  if (user === computer) return "draw"; // draw if both choices are the same
-  if (
-    (user === "rock" && computer === "scissors") || (user === "paper" && computer === "rock") ||
-    (user === "scissors" && "paper")
-  ) 
-  {return "win"}
-  return "lose";
-}
 
 export default function App() {
   const [phase, setPhase] = useState("start"); // state to track current phase: "start" | "select" | "result"
@@ -33,7 +25,7 @@ export default function App() {
     const comp = choices[Math.floor(Math.random() * choices.length)]; // random comp choice
     setUserChoice(choice); // save user's choice
     setComputerChoice(comp);
-    setResult(getResult(choice, comp)); // determine & save result
+    setResult(calcWinner(choice, comp)); // determine & save result
     setPhase("result"); // result phase
   };
 
@@ -47,11 +39,11 @@ export default function App() {
   return (
     <div>
       {phase === "start" && <Start onStart={handleStart} />}
-      {phase === "select" && <Select onStart={handleSelect} />}
+      {phase === "select" && <Select onSelect={handleSelect} />}
       {phase === "result" && (
         <Result userChoice={userChoice} computerChoice={computerChoice} result={result} 
         onReplay={handleReplay} />
-      )};
+      )}
     </div>
   );
 }

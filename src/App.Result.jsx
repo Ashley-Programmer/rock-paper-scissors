@@ -22,10 +22,12 @@ export function calcWinner(player, opponent) {
 
 // Message for all results
 const resultMessages = {
-  win: "You Win!",
-  lose: "You Lose!",
-  draw: "It's a Draw!"
+  win: "You Win",
+  lose: "You Lose",
+  draw: "It's a Draw"
 };
+
+const capitalize = (word) => word ? word.charAt(0).toUpperCase() + word.slice(1) : "";
 
 const calcMessage = (player, opponent, status) => {
   if (status === "Draw") return `Both chose ${player}`;

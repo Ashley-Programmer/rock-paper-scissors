@@ -12,7 +12,7 @@ export default function Select({ onSelect }) {
         {choices.map((choice) => (
           <button 
             key={choice}
-            onClick={() => onselect(choice)} // Notify parent of the user's choice
+            onClick={() => onSelect(choice)} // Notify parent of the user's choice
             style={{ 
               fontSize: "1.25rem", padding: "1rem 2rem", textTransform: "capitalize", cursor: "pointer" 
             }}
